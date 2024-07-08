@@ -30,12 +30,9 @@ function ReviewForm({movieId}: any) {
                 <input type="number" name="movieId" readOnly hidden value={movieId} className="border-2 border-gray-950 p-3"/>
                 <div className='flex justify-end'>
                     <CreateButton/>
-                </div>
-                
+                </div>   
             </form>
-
             </div>
-            
         </div>
 
     )

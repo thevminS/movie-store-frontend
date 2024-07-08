@@ -24,22 +24,23 @@ export async function validateAuthToken() {
             cookies.set("expiresIn", data.token.expiresIn);
             return true;
         }else{
-            cookies.remove("token");
-            cookies.remove("expiresIn");
-            cookies.remove("user");
-            cookies.remove("refreshToken");
+            removeCookies();
             return false;
         }
     }else{
         if(refreshToken){
             return true;
         }
-        cookies.remove("token");
-        cookies.remove("expiresIn");
-        cookies.remove("user");
-        cookies.remove("refreshToken");
-        console.log("--- Redirect ----")
+        removeCookies();
+        // console.log("--- Redirect ----")
         return false;
     }
     
+}
+
+function removeCookies(){
+    cookies.remove("token");
+    cookies.remove("expiresIn");
+    cookies.remove("user");
+    cookies.remove("refreshToken");
 }

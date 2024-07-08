@@ -3,16 +3,15 @@
 import PopupError from '@/app/_components/PopupError'
 import { authenticate } from '@/app/lib/actions'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 
 function LoginPage() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined)
 
-
-
   return (
     <div className='w-full h-[100vh] flex justify-center items-center'>
+            {errorMessage && <PopupError message={errorMessage}/>}
       <div className='w-[400px] p-10 h-[450px] bg-white text-slate-950 rounded-lg flex flex-col'>
         <div className='font-bold text-3xl pb-6 '>Login</div>
         <form action={dispatch} className='flex flex-col space-y-10'>

@@ -3,10 +3,8 @@
 import { BACKEND_API_URL } from "@/config";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { getCookie, getCookies, setCookie } from "cookies-next";
-import { Cookie } from "next/font/google";
-import { validateAuthToken } from "../_utils/forntEndRefresh";
-import { revalidatePath } from "next/cache";
+import { getCookies, setCookie } from "cookies-next";
+
 import { checkAndRefreshToken } from "../_utils/refresh";
 
  
@@ -16,26 +14,14 @@ export async function authenticate(_currentState: unknown, formData: FormData) {
 
     // console.log(email, password);
 
-
-
     const data = await authenticateUser(email,password);
 
     if(data === null){
         return "Invalid Credentials"
     }
-    // console.log(data)
-    setCookie("user", data.user, {cookies});
-    setCookie("token", data.token.accessToken, {cookies});
-    setCookie("refreshToken", data.token.refreshToken, {cookies});
-    setCookie("expiresIn", data.token.expiresIn, {cookies});
-
-    // const x = JSON.parse(getCookie("user", {cookies}));
-    // console.log(x);
-
+    saveDataInCookies(data);
     redirect("/movies");
-
 }
-
 
 async function authenticateUser(email:string, password:string){
 
@@ -53,8 +39,6 @@ async function authenticateUser(email:string, password:string){
         return data;
     }
     return null;
-    
-    
 }
 
 
@@ -65,23 +49,15 @@ export async function register(_currentState: unknown, formData: FormData) {
     const name: string = formData.get("name") as string;
     const profileImageUrl: string =formData.get("profileImageUrl") as string;
 
-    console.log(email, password, name, profileImageUrl)
+    // console.log(email, password, name, profileImageUrl);
 
     const data = await registerUser(name,email,password,profileImageUrl);
     
     if(data === null){
         return "User already exists or invalid details";
     }
-
-    const cookieStore = cookies();
-    cookieStore.set("user", data.user);
-    cookieStore.set("token", data.token.accessToken);
-    cookieStore.set("refreshToken", data.token.refreshToken);
-    cookieStore.set("expiresIn", data.token.expiresIn);
-
+    saveDataInCookies(data);
     redirect("/movies");
-
-
 }
 
 async function registerUser(name: string,email: string,password: string,profileImageUrl : string){
@@ -102,7 +78,6 @@ async function registerUser(name: string,email: string,password: string,profileI
         return data;
     }
     return null;
-    
 }
 
 function sendRequest(url:string, method:string, body:any) {
@@ -118,8 +93,6 @@ function sendRequest(url:string, method:string, body:any) {
     return fetch(url, options as any);
 }
 
-
- 
 export async function logout() {
 
     const cookieStore = cookies();
@@ -143,22 +116,12 @@ export async function logout() {
 
 }
 
-export async function getUserId(){
-    return cookies().get("id");
+function saveDataInCookies(data : any){
+    setCookie("user", data.user, {cookies});
+    setCookie("token", data.token.accessToken, {cookies});
+    setCookie("refreshToken", data.token.refreshToken, {cookies});
+    setCookie("expiresIn", data.token.expiresIn, {cookies});
 }
-
-export async function getToken() {
-    return cookies().get("token")
-}
-
-export async function setRefreshCookies({token, expiredIn}:any) {
-    console.log("Setting cookies");
-    console.log(getCookies());
-    setCookie("token", token, {cookies});
-    setCookie("expiresIn", expiredIn, {cookies});
-    console.log("setted");
-}
-
 
 export async function createReview(_currentState: unknown, formData: FormData) {
     const res = await checkAndRefreshToken();
@@ -187,24 +150,7 @@ export async function createReview(_currentState: unknown, formData: FormData) {
             review : review
          }),
     });
-
     return "refresh";
-    // const data = await authenticateUser(email,password);
-
-    // if(data === null){
-    //     return "Invalid Credentials"
-    // }
-    // // console.log(data)
-    // setCookie("user", data.user, {cookies});
-    // setCookie("token", data.token.accessToken, {cookies});
-    // setCookie("refreshToken", data.token.refreshToken, {cookies});
-    // setCookie("expiresIn", data.token.expiresIn, {cookies});
-
-    // // const x = JSON.parse(getCookie("user", {cookies}));
-    // // console.log(x);
-
-    // redirect("/movies");
-
 }
 
 

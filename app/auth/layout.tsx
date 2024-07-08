@@ -6,7 +6,8 @@ export default function Layout({
     children: React.ReactNode
   }) {
     return (
-    <div>
-      {children}
-    </div>);
+      <div>
+        {children}
+      </div>
+    );
   }

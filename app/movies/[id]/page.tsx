@@ -50,8 +50,7 @@ function MoviePage({params}: any) {
             if(!res){
                 router.push("/auth/login");
             }
-
-            console.log(" -----At Movies------");
+            // console.log(" -----At Movies------");
             const token = cookies.get("token");
             
             const response = await fetch(`${BACKEND_API_URL}/movies/${movieId}`,{ 
@@ -79,8 +78,6 @@ function MoviePage({params}: any) {
         console.log("useEffect",movieDetails)
     },[movieDetails])
 
-
-    
     return (
         <div className=' w-full h-full overflow-hidden pb-10 pl-20 pr-20 flex pt-5 font-semibold text-lg'>
             <div className='w-2/3 overflow-auto h-[80vh] gap-y-10 flex flex-col pr-10'>
@@ -96,26 +93,9 @@ function MoviePage({params}: any) {
                     <div className='mt-4'>
                         <ReviewForm movieId={movieId}/>
                     </div>
-                    <div className='mt-3'>
-                        {movieDetails && movieDetails.reviews?.map((review: Review)=>(
-                            <div key={review.id} className='p-[10px]'>
-                                <div className='text-sm font-light'>
-
-                                    {`"${review.review}"`}
-                                </div>
-                                <div className='text-sm font-normal pt-1'>
-                                    <div>
-                                        {`-- ${review.owner.name}`}
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-
-                    </div>
-
+                    <ReviewList movieDetails = {movieDetails}/>
                 </div>
-                
-                
+                 
             </div>
             <div className='w-1/3 m-10 h-full border-4 border-solid border-gray-300 rounded-md p-5'>
                 <div className='flex space-x-3'>
@@ -129,14 +109,11 @@ function MoviePage({params}: any) {
                 <TopicAndDataContainer topic="Language :" value={movieDetails?.language}/>
                 <TopicAndDataContainer topic="Rating :" value={movieDetails?.rating}/>
             </div>
-            
         </div>
     )
 }
 
 export default MoviePage;
-
-
 
 const TopicAndDataContainer = ({topic, value}: any) => {
     return(
@@ -151,25 +128,22 @@ const TopicAndDataContainer = ({topic, value}: any) => {
     );
 }
 
-const ReviewList = ({reviewList}: any) => {
-    const reviews = reviewList as Review[];
-    console.log(reviewList);
+const ReviewList = ({movieDetails}: any) => {
     return(
-        <div className='w-full'>
-            {reviews && (reviews.length > 0) && reviews.map((review: Review)=>(
-                <div key={review.id} className='w-full'>
-                    <div className=''>
-                        {review.review}
+        <div className='mt-3'>
+            {movieDetails && movieDetails.reviews?.map((review: Review)=>(
+                <div key={review.id} className='p-[10px]'>
+                    <div className='text-sm font-light'>
+
+                        {`"${review.review}"`}
                     </div>
-                    <div>
-                        
+                    <div className='text-sm font-normal pt-1'>
                         <div>
-                            {review.owner.name}
+                            {`-- ${review.owner.name}`}
                         </div>
                     </div>
                 </div>
             ))}
-
         </div>
     );
 }

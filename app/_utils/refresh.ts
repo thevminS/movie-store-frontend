@@ -23,23 +23,23 @@ export async function checkAndRefreshToken(){
             cookies().set("expiresIn", data.token.expiresIn);
             return true;
         }else{
-            cookies().delete("token");
-            cookies().delete("expiresIn");
-            cookies().delete("user");
-            cookies().delete("refreshToken");
+            removeCookies();
             return false;
         }
     }else{
         if(refreshToken){
             return true;
         }else{
-            cookies().delete("token");
-            cookies().delete("expiresIn");
-            cookies().delete("user");
-            cookies().delete("refreshToken");
+            removeCookies();
             // console.log("--- Redirect ----");
             return false;
-        }
-        
+        } 
     }
+}
+
+function removeCookies(){
+    cookies().delete("token");
+    cookies().delete("expiresIn");
+    cookies().delete("user");
+    cookies().delete("refreshToken");
 }
