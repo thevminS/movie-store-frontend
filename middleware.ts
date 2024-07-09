@@ -16,7 +16,3 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
 }
-
-// export {default} from "next-auth/middleware"
-
-// export const config = { matcher: ["/movies/:path*"] }

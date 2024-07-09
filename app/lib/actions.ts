@@ -3,7 +3,7 @@
 import { BACKEND_API_URL } from "@/config";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { getCookies, setCookie } from "cookies-next";
+import { setCookie } from "cookies-next";
 
 import { checkAndRefreshToken } from "../_utils/refresh";
 
@@ -11,8 +11,6 @@ import { checkAndRefreshToken } from "../_utils/refresh";
 export async function authenticate(_currentState: unknown, formData: FormData) {
     const email:string = formData.get("email") as string;
     const password:string = formData.get("password") as string;
-
-    // console.log(email, password);
 
     const data = await authenticateUser(email,password);
 
@@ -48,8 +46,6 @@ export async function register(_currentState: unknown, formData: FormData) {
     const password:string = formData.get("password") as string;
     const name: string = formData.get("name") as string;
     const profileImageUrl: string =formData.get("profileImageUrl") as string;
-
-    // console.log(email, password, name, profileImageUrl);
 
     const data = await registerUser(name,email,password,profileImageUrl);
     
@@ -99,7 +95,7 @@ export async function logout() {
 
     const token = cookieStore.get("token");
 
-    const response = await fetch(`${BACKEND_API_URL}/auth/refresh`,{
+    await fetch(`${BACKEND_API_URL}/auth/refresh`,{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -138,7 +134,7 @@ export async function createReview(_currentState: unknown, formData: FormData) {
 
     console.log({user, movieId, review, token});
 
-    const response = await fetch(`${BACKEND_API_URL}/reviews`,{
+    await fetch(`${BACKEND_API_URL}/reviews`,{
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,

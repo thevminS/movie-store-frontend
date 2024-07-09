@@ -29,7 +29,6 @@ export default function HomeConstainer() {
       if(!res){
         router.push("/auth/login");
       }
-      // console.log(" -----At Movies------");
       const token = cookies.get("token");
       
       const response = await fetch(`${BACKEND_API_URL}/movies`,{ 
@@ -69,8 +68,8 @@ export default function HomeConstainer() {
 
        <div className='flex flex-row space-x-20'>
           {
-          movieList?.map((movie:MovieWidgetDetails, id: number)=>(
-            <MovieWidget key={id} movie={movie}/>
+          movieList?.map((movie:MovieWidgetDetails)=>(
+            <MovieWidget key={movie.id} movie={movie}/>
           ))
         }
       </div>

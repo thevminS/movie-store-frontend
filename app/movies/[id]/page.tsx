@@ -50,7 +50,6 @@ function MoviePage({params}: any) {
             if(!res){
                 router.push("/auth/login");
             }
-            // console.log(" -----At Movies------");
             const token = cookies.get("token");
             
             const response = await fetch(`${BACKEND_API_URL}/movies/${movieId}`,{ 
@@ -63,7 +62,6 @@ function MoviePage({params}: any) {
             )
             if(response.status == 302){
                 const data = await response.json();
-                // console.log();
                 setMovieDetails(data as MovieDetails);
             }
         }
@@ -131,7 +129,7 @@ const TopicAndDataContainer = ({topic, value}: any) => {
 const ReviewList = ({movieDetails}: any) => {
     return(
         <div className='mt-3'>
-            {movieDetails && movieDetails.reviews?.map((review: Review)=>(
+            {movieDetails?.reviews?.map((review: Review)=>(
                 <div key={review.id} className='p-[10px]'>
                     <div className='text-sm font-light'>
 
@@ -148,20 +146,3 @@ const ReviewList = ({movieDetails}: any) => {
     );
 }
 
-
-
-
-// async function getMovie(id:number){
-//     const authorization =await getMyHeader();
-
-//     const response = await fetch(`${BACKEND_API_URL}/movies/${id}`,
-//       { 
-//         cache: 'no-store',
-//         headers : {authorization} 
-//     }
-//     )
-//     const data = await response.json();
-//     console.log(data)
-//     return data as MovieDetails;
-    
-//   }

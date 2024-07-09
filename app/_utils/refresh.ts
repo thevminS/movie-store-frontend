@@ -4,10 +4,9 @@ import { cookies } from "next/headers";
 export async function checkAndRefreshToken(){
     const expiredIn = cookies().get("expiresIn")?.value;
     const refreshToken = cookies().get("refreshToken")?.value;
-    // console.log("At refresh");
-    // console.log(expiredIn);
+
     if(new Date().getTime() > new Date(expiredIn as string).getTime()){
-        // console.log(" -----At refresh------");
+
         const response = await fetch(`${BACKEND_API_URL}/auth/refresh`,{
             method: 'POST',
             headers: {
@@ -26,15 +25,12 @@ export async function checkAndRefreshToken(){
             removeCookies();
             return false;
         }
+    }else if(refreshToken){
+        return true;
     }else{
-        if(refreshToken){
-            return true;
-        }else{
-            removeCookies();
-            // console.log("--- Redirect ----");
-            return false;
-        } 
-    }
+        removeCookies();
+        return false;
+    } 
 }
 
 function removeCookies(){

@@ -14,7 +14,7 @@ function MovieWidget({movie}: any) {
   return(
     <div className='w-[260px]'>
       <Link href={`/movies/${id}`}>
-          <div className={tailwindClasses} onMouseEnter={() => setIsMouseEntered(true)} onMouseLeave={() => setIsMouseEntered(false)}>
+        <div className={tailwindClasses} onMouseEnter={() => setIsMouseEntered(true)} onMouseLeave={() => setIsMouseEntered(false)} role='button'>
           <img src={coverImageLink}
               alt={name}
               width="260"
@@ -32,7 +32,7 @@ function MovieWidget({movie}: any) {
               </div>
               </div>
           }
-          </div>
+        </div>
       </Link>
       <div className='text-white font-bold text-2xl pt-4'>
         {name}

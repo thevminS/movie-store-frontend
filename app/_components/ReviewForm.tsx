@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useReducer } from 'react'
+import React, { useEffect } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 import { createReview } from '../lib/actions'
 import Cookies from 'universal-cookie';
@@ -10,7 +10,6 @@ const cookies = new Cookies(null, { path: '/' });
 
 function ReviewForm({movieId}: any) {
     const router = useRouter();
-    const user = cookies.get("user");
     const [errorMessage, dispatch] = useFormState(createReview, undefined);
     console.log({movieId});
 
