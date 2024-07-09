@@ -31,6 +31,7 @@ async function authenticateUser(email:string, password:string){
             password: password,
         }
     );
+    console.log(response);
     if(response.ok){
         const data = await response.json();
         console.log(data);
