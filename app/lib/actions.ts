@@ -128,7 +128,7 @@ export async function createReview(_currentState: unknown, formData: FormData) {
     const movieId:string = formData.get("movieId") as string;
     const review:string = formData.get("review") as string;
 
-    const user =JSON.parse(cookies().get("user")?.value || "");
+    const user =JSON.parse(cookies().get("user")?.value ?? "");
 
     const token = cookies().get("token")?.value;
 

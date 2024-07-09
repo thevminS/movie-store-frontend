@@ -2,5 +2,5 @@ projectKey=movie-store-frontend
 serverUrl=http://localhost:9000
 serverVersion=10.6.0.92116
 dashboardUrl=http://localhost:9000/dashboard?id=movie-store-frontend
-ceTaskId=d5644714-9d85-4017-bcec-1d87df2e5b1c
-ceTaskUrl=http://localhost:9000/api/ce/task?id=d5644714-9d85-4017-bcec-1d87df2e5b1c
+ceTaskId=1df417ae-1114-47c9-b38b-d464308aecc5
+ceTaskUrl=http://localhost:9000/api/ce/task?id=1df417ae-1114-47c9-b38b-d464308aecc5

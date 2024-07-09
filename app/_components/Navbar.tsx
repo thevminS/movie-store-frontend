@@ -15,7 +15,7 @@ function Navbar() {
         <div className='flex gap-10'>
 
           <Link href="/user">User</Link>
-          <div onClick={()=>{logout();}} className='cursor-pointer' role='button'>Logout</div>
+          <div onClick={()=>{logout();}} className='cursor-pointer' role='link'>Logout</div>
         </div>
           
     </nav>

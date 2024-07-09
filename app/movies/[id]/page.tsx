@@ -40,7 +40,7 @@ function MoviePage({params}: any) {
     const router = useRouter();
 
     const [movieDetails,setMovieDetails] = useState<MovieDetails | null>(null);
-    const youtubeId = getYouTubeId(movieDetails?.tailorLink || "") || "";
+    const youtubeId = getYouTubeId(movieDetails?.tailorLink ?? "") || "";
     const movieId = params.id;
 
     useEffect(()=>{
